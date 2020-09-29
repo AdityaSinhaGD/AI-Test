@@ -2,17 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GOAPWorld : MonoBehaviour
+public sealed class GOAPWorld
 {
-    // Start is called before the first frame update
-    void Start()
+    private static readonly GOAPWorld instance;
+    public static GOAPWorld Instance
     {
-        
+        get
+        {
+            return instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private static WorldStates world;
+
+    static GOAPWorld()
     {
-        
+        world = new WorldStates();
+    }
+
+    private GOAPWorld()
+    {
+
+    }
+
+    public WorldStates GetWorldStates()
+    {
+        return world;
     }
 }

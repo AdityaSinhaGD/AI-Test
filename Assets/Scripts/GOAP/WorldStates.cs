@@ -64,5 +64,9 @@ public class WorldStates
         }
     }
 
+    public Dictionary<string, int> GetStates()
+    {
+        return states;
+    }
 
 }
