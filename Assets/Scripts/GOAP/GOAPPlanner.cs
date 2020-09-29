@@ -33,10 +33,10 @@ public class GOAPPlanner
             }
         }
 
-        List<Node> nodes = new List<Node>();
+        List<Node> leaves = new List<Node>();
         Node start = new Node(null, 0f, GOAPWorld.Instance.GetWorldStates().GetStates(), null);
 
-        bool success = BuildGraph(start, nodes, usableActions, goal);
+        bool success = BuildGraph(start, leaves, usableActions, goal);
 
         if (!success)
         {
@@ -45,7 +45,7 @@ public class GOAPPlanner
         }
 
         Node leastCostNode = null;
-        foreach(Node node in nodes)
+        foreach(Node node in leaves)
         {
             if(leastCostNode == null)
             {
