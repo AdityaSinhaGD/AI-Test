@@ -8,7 +8,7 @@ public class Patient : GOAPAgent
     void Start()
     {
         base.Start();
-        SubGoal s1 = new SubGoal("isWaiting", 1, true);
+        Goal s1 = new Goal("isWaiting", 1, true);
         goals.Add(s1, 3);
     }
 
