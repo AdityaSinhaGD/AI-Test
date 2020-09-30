@@ -27,19 +27,13 @@ public class GOAPAgent : MonoBehaviour
     public SubGoal currentGoal;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         GOAPAction[] allActions = this.GetComponents<GOAPAction>();//Get all actions this agent can perform
-        foreach(GOAPAction action in allActions)
+        foreach (GOAPAction action in allActions)
         {
             actions.Add(action);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     bool invoked = false;
@@ -64,11 +58,11 @@ public class GOAPAgent : MonoBehaviour
             }
             return;
         }
-        if(planner == null||actionQueue == null)
+        if (planner == null || actionQueue == null)
         {
             planner = new GOAPPlanner();
             var sortedGoals = from entry in goals orderby entry.Value descending select entry;
-            foreach(KeyValuePair<SubGoal,int> sgoal in sortedGoals)
+            foreach (KeyValuePair<SubGoal, int> sgoal in sortedGoals)
             {
                 actionQueue = planner.plan(actions, sgoal.Key.subGoals, null);
                 if (actionQueue != null)
@@ -84,6 +78,27 @@ public class GOAPAgent : MonoBehaviour
             {
                 goals.Remove(currentGoal);
                 planner = null;
+            }
+        }
+        if (actionQueue != null && actionQueue.Count > 0)
+        {
+            currentAction = actionQueue.Dequeue();
+            if (currentAction.PrePerform())
+            {
+                if(currentAction.target == null && currentAction.targetTag != "")
+                {
+                    currentAction.target = GameObject.FindGameObjectWithTag(currentAction.targetTag);
+                    
+                }
+                if (currentAction.target != null)
+                {
+                    currentAction.isActionRunning = true;
+                    currentAction.navAgent.SetDestination(currentAction.target.transform.position);
+                }
+            }
+            else
+            {
+                actionQueue = null;
             }
         }
     }

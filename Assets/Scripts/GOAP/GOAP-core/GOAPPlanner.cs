@@ -45,17 +45,17 @@ public class GOAPPlanner
         }
 
         Node leastCostNode = null;
-        foreach(Node node in leaves)
+        foreach(Node leaf in leaves)
         {
             if(leastCostNode == null)
             {
-                leastCostNode = node;
+                leastCostNode = leaf;
             }
             else
             {
-                if (node.cost < leastCostNode.cost)
+                if (leaf.cost < leastCostNode.cost)
                 {
-                    leastCostNode = node;
+                    leastCostNode = leaf;
                 }
             }
         }
@@ -81,6 +81,7 @@ public class GOAPPlanner
         Debug.Log("The plan is:");
         foreach(GOAPAction action in actionQueue)
         {
+            Debug.Log("Q:"+action.actionName);
             Debug.Log(action.actionCost);
         }
 

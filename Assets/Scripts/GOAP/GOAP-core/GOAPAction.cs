@@ -9,7 +9,7 @@ public abstract class GOAPAction : MonoBehaviour
     public float actionCost = 1.0f;
 
     public GameObject target; //location where action will take place
-    public GameObject targetTag; //pickup gameobject using tag, add them from scene heirarchy
+    public string targetTag; //pickup gameobject using tag, add them from scene heirarchy
     public float duration = 0f; //time taken for action to complete
 
     public WorldState[] preconditions;

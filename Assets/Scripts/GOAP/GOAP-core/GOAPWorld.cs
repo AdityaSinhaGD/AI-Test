@@ -4,15 +4,8 @@ using UnityEngine;
 
 public sealed class GOAPWorld
 {
-    private static readonly GOAPWorld instance;
-    public static GOAPWorld Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
+    private static readonly GOAPWorld instance = new GOAPWorld();
+    
     private static WorldStates world;
 
     static GOAPWorld()
@@ -28,5 +21,13 @@ public sealed class GOAPWorld
     public WorldStates GetWorldStates()
     {
         return world;
+    }
+
+    public static GOAPWorld Instance
+    {
+        get
+        {
+            return instance;
+        }
     }
 }
