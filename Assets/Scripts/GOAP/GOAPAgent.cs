@@ -42,8 +42,49 @@ public class GOAPAgent : MonoBehaviour
         
     }
 
+    bool invoked = false;
+    void CompleteAction()
+    {
+        currentAction.isActionRunning = false;
+        currentAction.PostPerform();
+        invoked = false;
+    }
+
     private void LateUpdate()
     {
-        
+        if (currentAction != null && currentAction.isActionRunning)
+        {
+            if (currentAction.navAgent.hasPath && currentAction.navAgent.remainingDistance < 1f)
+            {
+                if (!invoked)
+                {
+                    Invoke("CompleteAction", currentAction.duration);
+                    invoked = true;
+                }
+            }
+            return;
+        }
+        if(planner == null||actionQueue == null)
+        {
+            planner = new GOAPPlanner();
+            var sortedGoals = from entry in goals orderby entry.Value descending select entry;
+            foreach(KeyValuePair<SubGoal,int> sgoal in sortedGoals)
+            {
+                actionQueue = planner.plan(actions, sgoal.Key.subGoals, null);
+                if (actionQueue != null)
+                {
+                    currentGoal = sgoal.Key;
+                    break;
+                }
+            }
+        }
+        if (actionQueue != null && actionQueue.Count == 0)
+        {
+            if (currentGoal.remove)
+            {
+                goals.Remove(currentGoal);
+                planner = null;
+            }
+        }
     }
 }
