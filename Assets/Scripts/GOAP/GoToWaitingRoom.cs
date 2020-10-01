@@ -7,6 +7,8 @@ public class GoToWaitingRoom : GOAPAction
     public override bool PostPerform()
     {
         GOAPWorld.Instance.GetWorldStates().ModifyState("patientWaiting", 1);
+        GOAPWorld.Instance.AddPatient(this.gameObject);
+        
         return true;
     }
 

@@ -22,6 +22,8 @@ public abstract class GOAPAction : MonoBehaviour
 
     public WorldStates agentBeliefs;
 
+    public GOAPInventory inventory;
+
     public bool isActionRunning = false;
 
     public GOAPAction()
@@ -49,6 +51,7 @@ public abstract class GOAPAction : MonoBehaviour
                 afterEffects.Add(worldState.key, worldState.value);
             }
         }
+        inventory = GetComponent<GOAPAgent>().inventory;
     }
 
     public bool isAchievable()

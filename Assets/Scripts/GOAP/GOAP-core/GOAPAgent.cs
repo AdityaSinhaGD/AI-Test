@@ -20,6 +20,8 @@ public class GOAPAgent : MonoBehaviour
 {
     public List<GOAPAction> actions = new List<GOAPAction>();
     public Dictionary<Goal, int> goals = new Dictionary<Goal, int>();
+    public GOAPInventory inventory = new GOAPInventory();
+    public WorldStates beliefs = new WorldStates();
 
     GOAPPlanner planner;
     public Queue<GOAPAction> actionQueue;
@@ -61,7 +63,7 @@ public class GOAPAgent : MonoBehaviour
         if (planner == null || actionQueue == null)
         {
             planner = new GOAPPlanner();
-            var sortedGoals = from entry in goals orderby entry.Value descending select entry;
+            var sortedGoals = from entry in goals orderby entry.Value descending select entry;//sort goals in order of priority
             foreach (KeyValuePair<Goal, int> sgoal in sortedGoals)
             {
                 actionQueue = planner.plan(actions, sgoal.Key.subGoals, null);
