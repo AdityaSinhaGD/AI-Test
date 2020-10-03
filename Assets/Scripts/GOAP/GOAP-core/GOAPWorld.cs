@@ -48,6 +48,11 @@ public sealed class GOAPWorld
         return patients.Dequeue();
     }
 
+    public void AddCubicle(GameObject cubicle)
+    {
+        cubicles.Enqueue(cubicle);
+    }
+
     public GameObject RemoveCubicle()
     {
         if (cubicles.Count == 0)

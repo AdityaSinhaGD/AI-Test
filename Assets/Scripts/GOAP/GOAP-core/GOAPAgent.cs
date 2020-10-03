@@ -21,7 +21,7 @@ public class GOAPAgent : MonoBehaviour
     public List<GOAPAction> actions = new List<GOAPAction>();
     public Dictionary<Goal, int> goals = new Dictionary<Goal, int>();
     public GOAPInventory inventory = new GOAPInventory();
-    public WorldStates beliefs = new WorldStates();
+    public WorldStates beliefs = new WorldStates();//local world state only available to this agent
 
     GOAPPlanner planner;
     public Queue<GOAPAction> actionQueue;
@@ -66,7 +66,7 @@ public class GOAPAgent : MonoBehaviour
             var sortedGoals = from entry in goals orderby entry.Value descending select entry;//sort goals in order of priority
             foreach (KeyValuePair<Goal, int> sgoal in sortedGoals)
             {
-                actionQueue = planner.plan(actions, sgoal.Key.subGoals, null);
+                actionQueue = planner.plan(actions, sgoal.Key.subGoals, beliefs);
                 if (actionQueue != null)
                 {
                     currentGoal = sgoal.Key;

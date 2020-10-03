@@ -37,7 +37,7 @@ public class GetPatient : GOAPAction
         {
             if (target.GetComponent<GOAPAgent>())
             {
-                target.GetComponent<GOAPAgent>().inventory.AddItem(resource);
+                target.GetComponent<GOAPAgent>().inventory.AddItem(resource);//Nurse agent adds cubicle resource to patient's inventory
             }
         }
         return true;

@@ -7,8 +7,8 @@ public class GoToWaitingRoom : GOAPAction
     public override bool PostPerform()
     {
         GOAPWorld.Instance.GetWorldStates().ModifyState("patientWaiting", 1);
-        GOAPWorld.Instance.AddPatient(this.gameObject);
-        
+        GOAPWorld.Instance.AddPatient(this.gameObject);//adding a waiting patient game object to world resources.
+        agentBeliefs.ModifyState("atHospital", 1);//cannot be a global world state. needs ot be a local belief.
         return true;
     }
 

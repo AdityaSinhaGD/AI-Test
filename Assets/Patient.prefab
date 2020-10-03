@@ -1651,6 +1651,8 @@ GameObject:
   - component: {fileID: 5089000671248742816}
   - component: {fileID: 5089000671248742819}
   - component: {fileID: 5089000671248742818}
+  - component: {fileID: 1770402671}
+  - component: {fileID: 7922374932062968947}
   m_Layer: 0
   m_Name: Patient
   m_TagString: Untagged
@@ -1683,7 +1685,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1711,7 +1713,7 @@ MonoBehaviour:
   actionCost: 1
   target: {fileID: 0}
   targetTag: Door
-  duration: 2
+  duration: 1
   preconditions: []
   effects:
   - key: hasArrived
@@ -1773,12 +1775,62 @@ MonoBehaviour:
   actionCost: 1
   target: {fileID: 0}
   targetTag: Reception
-  duration: 5
+  duration: 1
   preconditions:
   - key: hasArrived
     value: 0
   effects:
   - key: hasRegistered
+    value: 0
+  navAgent: {fileID: 0}
+  isActionRunning: 0
+--- !u!114 &1770402671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169987621887790072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe313a287f2b14946955d511c16b26f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Get Treated
+  actionCost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 0
+  preconditions:
+  - key: atHospital
+    value: 0
+  effects:
+  - key: isTreated
+    value: 0
+  navAgent: {fileID: 0}
+  isActionRunning: 0
+--- !u!114 &7922374932062968947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169987621887790072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c73b9e3345244989c66c083fafaa48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Action
+  actionCost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 0
+  preconditions:
+  - key: isTreatedAtHospital
+    value: 0
+  effects:
+  - key: goHome
     value: 0
   navAgent: {fileID: 0}
   isActionRunning: 0

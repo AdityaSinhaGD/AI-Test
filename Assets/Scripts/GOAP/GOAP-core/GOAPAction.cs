@@ -52,6 +52,7 @@ public abstract class GOAPAction : MonoBehaviour
             }
         }
         inventory = GetComponent<GOAPAgent>().inventory;
+        agentBeliefs = GetComponent<GOAPAgent>().beliefs;
     }
 
     public bool isAchievable()

@@ -8,7 +8,7 @@ public class Node
 {
     public Node parent;
     public float cost;
-    public Dictionary<string, int> state;
+    public Dictionary<string, int> state;//contains a concatenation of world and local world(agent belief) states.
     public GOAPAction action;
 
     public Node(Node parent, float cost, Dictionary<string, int> allStates, GOAPAction action)
@@ -18,14 +18,31 @@ public class Node
         this.state = new Dictionary<string, int>(allStates);//want this to just be a copy and not point to the dict in the args
         this.action = action;
     }
+
+    public Node(Node parent, float cost, Dictionary<string, int> allStates, Dictionary<string, int> belieftStates, GOAPAction action)
+    {
+        this.parent = parent;
+        this.cost = cost;
+        this.state = new Dictionary<string, int>(allStates);//want this to just be a copy and not point to the dict in the args
+
+        foreach(KeyValuePair<string,int> belief in belieftStates)
+        {
+            if (!this.state.ContainsKey(belief.Key))
+            {
+                this.state.Add(belief.Key, belief.Value);
+            }
+        }
+
+        this.action = action;
+    }
 }
 
 public class GOAPPlanner
 {
-   public Queue<GOAPAction> plan(List<GOAPAction> actions, Dictionary<string, int> goal, WorldStates states)
+    public Queue<GOAPAction> plan(List<GOAPAction> actions, Dictionary<string, int> goal, WorldStates beliefStates)
     {
         List<GOAPAction> usableActions = new List<GOAPAction>();
-        foreach(GOAPAction action in actions)
+        foreach (GOAPAction action in actions)
         {
             if (action.isAchievable())
             {
@@ -34,7 +51,7 @@ public class GOAPPlanner
         }
 
         List<Node> leaves = new List<Node>();
-        Node start = new Node(null, 0f, GOAPWorld.Instance.GetWorldStates().GetStates(), null);
+        Node start = new Node(null, 0f, GOAPWorld.Instance.GetWorldStates().GetStates(), beliefStates.GetStates(), null);
 
         bool success = BuildGraph(start, leaves, usableActions, goal);
 
@@ -45,9 +62,9 @@ public class GOAPPlanner
         }
 
         Node leastCostNode = null;
-        foreach(Node leaf in leaves)
+        foreach (Node leaf in leaves)
         {
-            if(leastCostNode == null)
+            if (leastCostNode == null)
             {
                 leastCostNode = leaf;
             }
@@ -73,15 +90,15 @@ public class GOAPPlanner
         }
 
         Queue<GOAPAction> actionQueue = new Queue<GOAPAction>();
-        foreach(GOAPAction action in result)
+        foreach (GOAPAction action in result)
         {
             actionQueue.Enqueue(action);
         }
 
         Debug.Log("The plan is:");
-        foreach(GOAPAction action in actionQueue)
+        foreach (GOAPAction action in actionQueue)
         {
-            Debug.Log("Q:"+action.actionName);
+            Debug.Log("Q:" + action.actionName);
             Debug.Log(action.actionCost);
         }
 
@@ -91,12 +108,12 @@ public class GOAPPlanner
     private bool BuildGraph(Node parent, List<Node> nodes, List<GOAPAction> usableActions, Dictionary<string, int> goal)
     {
         bool foundPath = false;
-        foreach(GOAPAction action in usableActions)
+        foreach (GOAPAction action in usableActions)
         {
             if (action.isAchievableUnderConditions(parent.state))
             {
                 Dictionary<string, int> currentState = new Dictionary<string, int>(parent.state);
-                foreach(KeyValuePair<string,int> effects in action.afterEffects)
+                foreach (KeyValuePair<string, int> effects in action.afterEffects)
                 {
                     if (!currentState.ContainsKey(effects.Key))
                     {
@@ -106,7 +123,7 @@ public class GOAPPlanner
 
                 Node node = new Node(parent, parent.cost + action.actionCost, currentState, action);
 
-                if(GoalAchieved(goal, currentState))
+                if (GoalAchieved(goal, currentState))
                 {
                     nodes.Add(node);
                     foundPath = true;
@@ -129,7 +146,7 @@ public class GOAPPlanner
     private List<GOAPAction> ActionSubset(List<GOAPAction> usableActions, GOAPAction action)
     {
         List<GOAPAction> subset = new List<GOAPAction>();
-        foreach(GOAPAction act in usableActions)
+        foreach (GOAPAction act in usableActions)
         {
             if (!act.Equals(action))
             {
@@ -141,7 +158,7 @@ public class GOAPPlanner
 
     private bool GoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> currentState)
     {
-        foreach(KeyValuePair<string,int> state in goal)
+        foreach (KeyValuePair<string, int> state in goal)
         {
             if (!currentState.ContainsKey(state.Key))
             {

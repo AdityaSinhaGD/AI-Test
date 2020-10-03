@@ -945,7 +945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &745887213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3376,7 +3376,7 @@ MonoBehaviour:
   - key: freeCubicle
     value: 1
   effects:
-  - key: treatPatient
+  - key: patientAccquired
     value: 0
   navAgent: {fileID: 0}
   isActionRunning: 0
@@ -3394,6 +3394,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: []
   currentAction: {fileID: 0}
+--- !u!114 &1554280474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554280470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd1cc29caeaf4b8db6b53e12621da8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Treat Patient
+  actionCost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 0
+  preconditions:
+  - key: patientAccquired
+    value: 0
+  effects:
+  - key: treatPatient
+    value: 0
+  navAgent: {fileID: 0}
+  isActionRunning: 0
 --- !u!1001 &1554855489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4609,20 +4634,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Patient
       objectReference: {fileID: 0}
-    - target: {fileID: 5089000671248742817, guid: 7955dbab54a3d4cbf95d6472850ef9e2,
+    - target: {fileID: 7922374932062968947, guid: 7955dbab54a3d4cbf95d6472850ef9e2,
         type: 3}
-      propertyPath: duration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5089000671248742818, guid: 7955dbab54a3d4cbf95d6472850ef9e2,
-        type: 3}
-      propertyPath: duration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5089000671248742878, guid: 7955dbab54a3d4cbf95d6472850ef9e2,
-        type: 3}
-      propertyPath: m_Speed
-      value: 7
+      propertyPath: actionName
+      value: Go Home
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7955dbab54a3d4cbf95d6472850ef9e2, type: 3}
