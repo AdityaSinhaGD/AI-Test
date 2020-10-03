@@ -48,7 +48,8 @@ public class WorldStates
         }
         else
         {
-            states.Add(key, value);
+            //states.Add(key, value);
+            AddState(key, value);
         }
     }
 

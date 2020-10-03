@@ -8,7 +8,7 @@ public class GetPatient : GOAPAction
 
     public override bool PrePerform()
     {
-        target = GOAPWorld.Instance.RemovePatient();
+        target = GOAPWorld.Instance.RemovePatient();//assinging a patient to a nurse
         if (target == null)
         {
             return false;
@@ -17,7 +17,7 @@ public class GetPatient : GOAPAction
         resource = GOAPWorld.Instance.RemoveCubicle();
         if (resource != null)
         {
-            inventory.AddItem(resource);
+            inventory.AddItem(resource);//adding a free cubicle to nurse's inventory
         }
         else
         {

@@ -1653,6 +1653,7 @@ GameObject:
   - component: {fileID: 5089000671248742818}
   - component: {fileID: 1770402671}
   - component: {fileID: 7922374932062968947}
+  - component: {fileID: 1770402679}
   m_Layer: 0
   m_Name: Patient
   m_TagString: Untagged
@@ -1821,7 +1822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c73b9e3345244989c66c083fafaa48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionName: Action
+  actionName: Go Home
   actionCost: 1
   target: {fileID: 0}
   targetTag: 
@@ -1834,6 +1835,19 @@ MonoBehaviour:
     value: 0
   navAgent: {fileID: 0}
   isActionRunning: 0
+--- !u!114 &1770402679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169987621887790072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b73cbd9ff664d6dac6b24dc119c3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisAgent: {fileID: 5089000671248742816}
 --- !u!1 &3975985135275284720
 GameObject:
   m_ObjectHideFlags: 0

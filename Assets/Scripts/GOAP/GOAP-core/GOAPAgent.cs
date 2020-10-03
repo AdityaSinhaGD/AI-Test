@@ -50,7 +50,8 @@ public class GOAPAgent : MonoBehaviour
     {
         if (currentAction != null && currentAction.isActionRunning)
         {
-            if (currentAction.navAgent.hasPath && currentAction.navAgent.remainingDistance < 1f)
+            //float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
+            if (currentAction.navAgent.hasPath &&  currentAction.navAgent.remainingDistance < 2.0f)
             {
                 if (!invoked)
                 {
@@ -63,7 +64,9 @@ public class GOAPAgent : MonoBehaviour
         if (planner == null || actionQueue == null)
         {
             planner = new GOAPPlanner();
+
             var sortedGoals = from entry in goals orderby entry.Value descending select entry;//sort goals in order of priority
+            
             foreach (KeyValuePair<Goal, int> sgoal in sortedGoals)
             {
                 actionQueue = planner.plan(actions, sgoal.Key.subGoals, beliefs);
@@ -79,8 +82,8 @@ public class GOAPAgent : MonoBehaviour
             if (currentGoal.remove)
             {
                 goals.Remove(currentGoal);
-                planner = null;
             }
+            planner = null;
         }
         if (actionQueue != null && actionQueue.Count > 0)
         {

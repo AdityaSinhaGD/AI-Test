@@ -99,13 +99,13 @@ public class GOAPPlanner
         foreach (GOAPAction action in actionQueue)
         {
             Debug.Log("Q:" + action.actionName);
-            Debug.Log(action.actionCost);
+            //Debug.Log(action.actionCost);
         }
 
         return actionQueue;
     }
 
-    private bool BuildGraph(Node parent, List<Node> nodes, List<GOAPAction> usableActions, Dictionary<string, int> goal)
+    private bool BuildGraph(Node parent, List<Node> leaves, List<GOAPAction> usableActions, Dictionary<string, int> goal)
     {
         bool foundPath = false;
         foreach (GOAPAction action in usableActions)
@@ -125,13 +125,13 @@ public class GOAPPlanner
 
                 if (GoalAchieved(goal, currentState))
                 {
-                    nodes.Add(node);
+                    leaves.Add(node);
                     foundPath = true;
                 }
                 else
                 {
                     List<GOAPAction> subset = ActionSubset(usableActions, action);//to prevent circular path creation in graph
-                    bool found = BuildGraph(node, nodes, subset, goal);
+                    bool found = BuildGraph(node, leaves, subset, goal);
                     if (found)
                     {
                         foundPath = true;
@@ -143,12 +143,12 @@ public class GOAPPlanner
         return foundPath;
     }
 
-    private List<GOAPAction> ActionSubset(List<GOAPAction> usableActions, GOAPAction action)
+    private List<GOAPAction> ActionSubset(List<GOAPAction> usableActions, GOAPAction removeThisAction)
     {
         List<GOAPAction> subset = new List<GOAPAction>();
         foreach (GOAPAction act in usableActions)
         {
-            if (!act.Equals(action))
+            if (!act.Equals(removeThisAction))
             {
                 subset.Add(act);
             }

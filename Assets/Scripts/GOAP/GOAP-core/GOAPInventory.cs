@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GOAPInventory
 {
-    List<GameObject> items = new List<GameObject>();
+    public List<GameObject> items = new List<GameObject>();
 
     public void AddItem(GameObject obj)
     {
